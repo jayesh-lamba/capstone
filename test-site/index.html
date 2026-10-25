@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Test Site — Second Origin Simulation (Port 5500)</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    header {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .badge {
+      display: inline-block;
+      background: #eff6ff;
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+      border: 1px solid #bfdbfe;
+    }
+    h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+    p {
+      color: var(--muted);
+      font-size: 15px;
+      margin-bottom: 16px;
+    }
+    .info-card {
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
+    .info-card strong { color: #1e293b; }
+    pre {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 14px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      overflow-x: auto;
+      margin: 12px 0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    .step-list {
+      list-style-type: decimal;
+      padding-left: 20px;
+      margin-bottom: 24px;
+      color: #334155;
+      font-size: 14px;
+    }
+    .step-list li { margin-bottom: 8px; }
+    .status-box {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #065f46;
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 14px;
+      margin-top: 24px;
+    }
+    .status-box h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <span class="badge">Customer Host Site</span>
+      <h1>Acme Partner Portal (Second-Origin Simulation)</h1>
+      <p>This host page is served from <strong>http://localhost:5500</strong> to simulate an external customer website embedding the FlyRank lead-capture widget from <strong>http://localhost:3000</strong>.</p>
+      
+      <div class="info-card">
+        <strong>Cross-Origin Verification Details:</strong>
+        <ul style="margin-top: 8px; margin-left: 20px;">
+          <li>Host Origin: <code>http://localhost:5500</code></li>
+          <li>Widget Script: <code>http://localhost:3000/widget.v1.js?id=e7b4010a-3d96-48c9-94b2-03d6d03d32cb</code></li>
+          <li>Configuration API: <code>http://localhost:3000/api/v1/widgets/e7b4010a-3d96-48c9-94b2-03d6d03d32cb/config</code></li>
+          <li>Submission API: <code>http://localhost:3000/api/v1/submissions</code></li>
+        </ul>
+      </div>
+
+      <h2>How This Works</h2>
+      <ol class="step-list">
+        <li>The host page loads the embed script tag below with <code>defer</code>.</li>
+        <li>The script extracts <code>id=e7b4010a-3d96-48c9-94b2-03d6d03d32cb</code> and queries the public config endpoint via CORS.</li>
+        <li>The widget mounts an isolated Shadow DOM container at the bottom-right of this page.</li>
+        <li>When a visitor submits the form, the browser issues a CORS preflight <code>OPTIONS</code> request followed by a cross-origin <code>POST</code>.</li>
+        <li>The backend records the submission under the owning tenant with IP geolocation and delivers a <code>201 Created</code> response.</li>
+      </ol>
+
+      <pre>&lt;!-- Embed Snippet pasted into host page --&gt;
+&lt;script src="http://localhost:3000/widget.v1.js?id=e7b4010a-3d96-48c9-94b2-03d6d03d32cb" defer&gt;&lt;/script&gt;</pre>
+
+      <div class="status-box">
+        <h3>Live Widget Verification Status</h3>
+        <p>The interactive widget should be visible at the bottom-right corner of this screen. Enter your details and submit to verify end-to-end ingestion and side-effect processing.</p>
+      </div>
+    </header>
+  </div>
+
+  <!-- Real Seeded FlyRank Widget Integration -->
+  <script src="http://localhost:3000/widget.v1.js?id=e7b4010a-3d96-48c9-94b2-03d6d03d32cb" defer></script>
+</body>
+</html>

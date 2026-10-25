@@ -1,0 +1,72 @@
+name: flyrank-capstone-widget-platform
+version: "1.0.0"
+description: "Embeddable Widget & Lead-Capture Platform with Multi-Tenant Isolation, Geo Fallbacks, and Hardened Public Ingestion"
+
+# Runtime commands for machine evaluation
+run: "docker compose up -d db && npm run dev"
+seed: "npm run seed"
+test: "npm test"
+verify_flows: "npm run verify:flows"
+test_browser: "npm run test:browser"
+
+# Base configuration
+base_url: "http://localhost:3000"
+test_origin_url: "http://localhost:5500"
+
+# Target endpoints for probe validation
+endpoints:
+  health:
+    path: "/health"
+    method: "GET"
+    auth_required: false
+  auth_login:
+    path: "/api/v1/auth/login"
+    method: "POST"
+    auth_required: false
+  auth_register:
+    path: "/api/v1/auth/register"
+    method: "POST"
+    auth_required: false
+  widgets_crud:
+    path: "/api/v1/widgets"
+    methods: ["GET", "POST"]
+    auth_required: true
+  widget_detail:
+    path: "/api/v1/widgets/:id"
+    methods: ["GET", "PUT", "DELETE"]
+    auth_required: true
+  widget_snippet:
+    path: "/api/v1/widgets/:id/snippet"
+    method: "GET"
+    auth_required: true
+  embed_script:
+    path: "/widget.v1.js"
+    method: "GET"
+    auth_required: false
+    cached: true
+  widget_config:
+    path: "/api/v1/widgets/:id/config"
+    method: "GET"
+    auth_required: false
+    cached: true
+  submissions:
+    path: "/api/v1/submissions"
+    methods: ["POST", "OPTIONS"]
+    auth_required: false
+    cors: true
+  dashboard_submissions:
+    path: "/api/v1/dashboard/submissions"
+    method: "GET"
+    auth_required: true
+  dashboard_stats:
+    path: "/api/v1/dashboard/stats"
+    method: "GET"
+    auth_required: true
+  dashboard_geo:
+    path: "/api/v1/dashboard/geo"
+    method: "GET"
+    auth_required: true
+  dashboard_ui:
+    path: "/dashboard"
+    method: "GET"
+    auth_required: false

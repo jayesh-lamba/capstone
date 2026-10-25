@@ -1,0 +1,46 @@
+{
+  "name": "flyrank-capstone-widget-platform",
+  "version": "1.0.0",
+  "description": "Embeddable Widget & Lead-Capture Platform with Multi-Tenant Isolation, Geo Fallbacks, and Hardened Public Ingestion",
+  "main": "src/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "node src/server.js",
+    "start": "node src/server.js",
+    "migrate": "node src/db/migrate.js",
+    "seed": "node src/db/seed.js",
+    "test": "node --test tests/**/*.test.js",
+    "db:start": "node scripts/start-db.js",
+    "db:stop": "node scripts/stop-db.js",
+    "db:status": "node scripts/status-db.js",
+    "test-site": "node scripts/serve-test-site.js",
+    "verify:flows": "node scripts/verify-browser-flows.js",
+    "test:browser": "node scripts/run-browser-tests.js"
+  },
+  "keywords": [
+    "flyrank",
+    "embeddable-widget",
+    "multi-tenant",
+    "lead-capture",
+    "express",
+    "postgresql"
+  ],
+  "author": "FlyRank Intern & Senior Backend Engineer",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "embedded-postgres": "^18.4.0-beta.17",
+    "express": "^4.21.1",
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^10.2.1",
+    "pg": "^8.13.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "jsdom": "^30.1.3",
+    "playwright": "^1.64.1",
+    "supertest": "^7.0.0"
+  }
+}

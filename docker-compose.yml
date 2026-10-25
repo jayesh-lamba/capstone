@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: flyrank_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-flyrank_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-flyrank_secret_pass}
+      POSTGRES_DB: ${POSTGRES_DB:-flyrank_widgets}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-flyrank_user} -d ${POSTGRES_DB:-flyrank_widgets}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: flyrank_mailpit
+    restart: unless-stopped
+    ports:
+      - "1025:1025" # SMTP server
+      - "8025:8025" # Web UI
+    environment:
+      MP_DATA_DIR: /data
+      MP_MAX_MESSAGES: 500
+
+volumes:
+  pgdata:
+    driver: local
